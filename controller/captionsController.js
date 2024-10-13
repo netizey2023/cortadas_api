@@ -1,4 +1,3 @@
-// controller/captionsController.js
 const { getSubtitles } = require('youtube-captions-scraper');
 
 const getCaptions = async (req, res) => {
@@ -10,6 +9,7 @@ const getCaptions = async (req, res) => {
 
   // Extrair o ID do vídeo do link
   const videoID = getVideoIDFromLink(videoLink);
+  console.log(`Video ID extraído: ${videoID}`);
 
   if (!videoID) {
     return res.status(400).json({ error: 'Link do vídeo inválido.' });
@@ -21,6 +21,8 @@ const getCaptions = async (req, res) => {
       videoID: videoID,
       lang: 'pt' // Alterar o idioma conforme necessário
     });
+
+    console.log('Legendas extraídas com sucesso:', captions);
 
     // Retornar o array com as legendas
     return res.status(200).json(captions);
