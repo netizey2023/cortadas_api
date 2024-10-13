@@ -1,18 +1,10 @@
 const { getSubtitles } = require('youtube-captions-scraper');
 
 const getCaptions = async (req, res) => {
-  const { videoLink } = req.body;
-
-  if (!videoLink) {
-    return res.status(400).json({ error: 'O link do vídeo é obrigatório.' });
-  }
-
-  // Extrair o ID do vídeo do link
-  const videoID = getVideoIDFromLink(videoLink);
-  console.log(`Video ID extraído: ${videoID}`);
+  const { videoID } = req.body; // Agora pegamos o videoID diretamente
 
   if (!videoID) {
-    return res.status(400).json({ error: 'Link do vídeo inválido.' });
+    return res.status(400).json({ error: 'O ID do vídeo é obrigatório.' });
   }
 
   try {
@@ -22,8 +14,6 @@ const getCaptions = async (req, res) => {
       lang: 'pt' // Alterar o idioma conforme necessário
     });
 
-    console.log('Legendas extraídas com sucesso:', captions);
-
     // Retornar o array com as legendas
     return res.status(200).json(captions);
   } catch (error) {
@@ -31,13 +21,6 @@ const getCaptions = async (req, res) => {
     return res.status(500).json({ error: 'Erro ao buscar legendas.' });
   }
 };
-
-// Função para extrair o ID do vídeo do YouTube a partir do link
-function getVideoIDFromLink(link) {
-  const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-  const match = link.match(regex);
-  return match ? match[1] : null;
-}
 
 module.exports = {
   getCaptions
