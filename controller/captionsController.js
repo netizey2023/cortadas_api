@@ -2,11 +2,8 @@ const { getSubtitles } = require('youtube-captions-scraper');
 
 const getCaptions = async (req, res) => {
   try {
-    // Verificar o corpo da requisição
-    console.log('Requisição recebida:', req.body);
-
-    // Verificar se o videoID foi enviado corretamente
-    const { videoID } = req.body;
+    // Capturando o videoID a partir dos parâmetros da URL
+    const videoID = req.params.videoID;
 
     if (!videoID) {
       console.error('Erro: O ID do vídeo não foi fornecido.');
