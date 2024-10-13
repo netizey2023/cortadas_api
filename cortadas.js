@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const captionsRoute = require('./routes/captionsRoute');
 
 const app = express();
-const port = 3000;
+const port = 3008;
 
 // Valor da API Key
 const API_KEY = 'kJLapRSt#VT';
